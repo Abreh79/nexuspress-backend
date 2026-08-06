@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nexuspress-ai"
+version = "0.1.0"
+description = "Autonomous AI-powered content generation and multi-CMS publishing engine."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "NexusPress AI Team" }
+]
+dependencies = [
+    "pydantic>=2.0.0",
+    "httpx>=0.24.0",
+    "typer>=0.9.0",
+    "jinja2>=3.1.0",
+    "pyyaml>=6.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black",
+    "ruff"
+]
+
+[project.scripts]
+nexuspress = "nexuspress_ai.cli:app"
