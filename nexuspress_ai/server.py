@@ -13,7 +13,7 @@ def do_OPTIONS(self):
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
 
-    def do_POST(self):
+    defdo_POST(self):
   
         # We only handle /api/v1/generate-ai
         if self.path == "/api/v1/generate-ai":
