@@ -108,7 +108,7 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
 
 def run_server():
-    port = int(os.environ.get("PORT", 8000))
+    port = int(os.environ.get("PORT", 3000))
     server_address = ("0.0.0.0", port)
     httpd = ThreadedHTTPServer(server_address, NexusPressRequestHandler)
     print(f"NexusPress backend running on port {port} (threaded)")
