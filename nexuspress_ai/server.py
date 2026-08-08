@@ -90,12 +90,16 @@ class NexusPressRequestHandler(BaseHTTPRequestHandler):
 
 
 import os
+from socketserver import ThreadingMixIn
+
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    daemon_threads = True
 
 def run_server():
     port = int(os.environ.get("PORT", 8000))
     server_address = ("0.0.0.0", port)
-    httpd = HTTPServer(server_address, NexusPressRequestHandler)
-    print(f"NexusPress backend running on port {port}")
+    httpd = ThreadedHTTPServer(server_address, NexusPressRequestHandler)
+    print(f"NexusPress backend running on port {port} (threaded)")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
