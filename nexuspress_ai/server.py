@@ -5,8 +5,16 @@ from nexuspress_ai.generators.article import ContentGenerator
 
 class NexusPressRequestHandler(BaseHTTPRequestHandler):
     """Local mock server representing the NexusPress Railway backend API."""
+def do_OPTIONS(self):
+        """Handle browser preflight requests."""
+        self.send_response(200)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.end_headers()
 
     def do_POST(self):
+  
         # We only handle /api/v1/generate-ai
         if self.path == "/api/v1/generate-ai":
             self.handle_generate_ai()
@@ -76,19 +84,23 @@ class NexusPressRequestHandler(BaseHTTPRequestHandler):
         except Exception as e:
             self.send_error_response(500, f"Internal generator error: {str(e)}")
 
-    def send_success_response(self, payload: dict):
+   def send_success_response(self, payload: dict):
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
         self.wfile.write(json.dumps(payload, indent=2).encode("utf-8"))
 
     def send_error_response(self, status_code: int, message: str):
         self.send_response(status_code)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
         self.wfile.write(json.dumps({"error": message}, indent=2).encode("utf-8"))
-
-
 import os
 from socketserver import ThreadingMixIn
 
