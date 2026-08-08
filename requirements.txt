@@ -3,3 +3,4 @@ google-genai
 fastapi
 uvicorn
 redis
+pydantic>=2.0.0
