@@ -5,7 +5,8 @@ from generators.article import ContentGenerator
 
 class NexusPressRequestHandler(BaseHTTPRequestHandler):
     """Local mock server representing the NexusPress Railway backend API."""
-def do_OPTIONS(self):
+
+    def do_OPTIONS(self):
         """Handle browser preflight requests."""
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -13,16 +14,12 @@ def do_OPTIONS(self):
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
 
-def do_POST(self):
-  
+    def do_POST(self):
         # We only handle /api/v1/generate-ai
         if self.path == "/api/v1/generate-ai":
             self.handle_generate_ai()
         else:
             self.send_error_response(404, "Endpoint not found")
-
-def handle_generate_ai(self):
-        # Verify headers
         auth_header = self.headers.get("Authorization", "")
         if not auth_header or not auth_header.startswith("Bearer "):
             self.send_error_response(401, "Missing or invalid Authorization license key")
