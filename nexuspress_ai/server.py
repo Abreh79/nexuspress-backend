@@ -3,6 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from generators.article import ContentGenerator
 
 
+
 class NexusPressRequestHandler(BaseHTTPRequestHandler):
     """Local mock server representing the NexusPress Railway backend API."""
 
@@ -24,6 +25,9 @@ def do_POST(self):
 def handle_generate_ai(self):
         # Verify headers
         auth_header = self.headers.get("Authorization", "")
+        if not auth_header or not auth_header.startswith("Bearer "):
+            self.send_error_response(401, "Missing or invalid Authorization header")
+            returnauth_header = self.headers.get("Authorization", "")
         if not auth_header or not auth_header.startswith("Bearer "):
             self.send_error_response(401, "Missing or invalid Authorization header")
             return
