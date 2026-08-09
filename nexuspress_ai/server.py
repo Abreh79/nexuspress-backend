@@ -1,4 +1,5 @@
 import json
+import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from generators.article import ContentGenerator
 
@@ -69,3 +70,15 @@ class NexusPressRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
         self.end_headers()
         self.wfile.write(json.dumps({"error": message}, indent=2).encode("utf-8"))
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+    server_address = ("0.0.0.0", port)
+    print(f"Starting NexusPress server on port {port}...", flush=True)
+    httpd = HTTPServer(server_address, NexusPressRequestHandler)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("Server stopping...", flush=True)
+        httpd.server_close()
