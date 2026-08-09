@@ -84,7 +84,7 @@ def handle_generate_ai(self):
         except Exception as e:
             self.send_error_response(500, f"Internal generator error: {str(e)}")
 
-   def send_success_response(self, payload: dict):
+def send_success_response(self, payload: dict):
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
@@ -93,7 +93,7 @@ def handle_generate_ai(self):
         self.end_headers()
         self.wfile.write(json.dumps(payload, indent=2).encode("utf-8"))
 
-    def send_error_response(self, status_code: int, message: str):
+def send_error_response(self, status_code: int, message: str):
         self.send_response(status_code)
         self.send_header("Content-Type", "application/json")
         self.send_header("Access-Control-Allow-Origin", "*")
