@@ -49,7 +49,34 @@ class NexusPressRequestHandler(BaseHTTPRequestHandler):
             generator = ContentGenerator()
             result = generator.generate(prompt)
 
-            self.send_success_response({"status": "success", "data": result})
+
+            # Convert ArticleDraft object to a JSON-serializable dict
+            if hasattr(result, "to_dict"):
+                data = result.to_dict()
+            elif hasattr(result, "model_dump"):
+                data = result.model_dump()
+            elif hasattr(result, "__dict__"):
+                data = vars(result)
+            else:
+                data = str(result)
+
+            self.send_success_response({"status": "success", "data": data})
+        except Exception as e:
+            self.send_error_response(500, f"Internal generator error: {str(e)}")
+          
+            # Convert ArticleDraft object to a JSON-serializable dict
+            if hasattr(result, "to_dict"):
+                data = result.to_dict()
+            elif hasattr(result, "model_dump"):
+                data = result.model_dump()
+            elif hasattr(result, "__dict__"):
+                data = vars(result)
+            else:
+                data = str(result)
+
+            self.send_success_response({"status": "success", "data": data})
+        except Exception as e:
+            self.send_error_response(500, f"Internal generator error: {str(e)}")
         except Exception as e:
             self.send_error_response(500, f"Internal generator error: {str(e)}")
 
