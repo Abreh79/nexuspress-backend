@@ -1,6 +1,6 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from nexuspress_ai.generators.article import ContentGenerator
+from generators.article import ContentGenerator
 
 
 class NexusPressRequestHandler(BaseHTTPRequestHandler):
