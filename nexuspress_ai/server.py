@@ -21,7 +21,7 @@ def do_POST(self):
         else:
             self.send_error_response(404, "Endpoint not found")
 
-    def handle_generate_ai(self):
+def handle_generate_ai(self):
         # Verify headers
         auth_header = self.headers.get("Authorization", "")
         if not auth_header or not auth_header.startswith("Bearer "):
